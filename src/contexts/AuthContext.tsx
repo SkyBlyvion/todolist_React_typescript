@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode, createContext, useContext, useState } from "react";
+import { STORAGE_KEY } from "../constants/AppConstant";
 
 // définition des propriétées de l'utilisateur
 interface UserInfo {
@@ -32,13 +33,13 @@ const AuthContextProvider = ({ children }: AuthContextProviderProps): ReactEleme
     // clé user correspond a l'interface userInfo et retourne :void
     const signIn = (user: UserInfo): void => {
         setUserInfo(user);
-        localStorage.setItem('STORAGE_KEY', JSON.stringify(user));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     }
 
     //méthode pour déconnecter l'user
     const signOut = (): void => {
         setUserInfo(undefined);
-        localStorage.removeItem('STORAGE_KEY');
+        localStorage.removeItem(STORAGE_KEY);
     }
 
     //définition des propriétes du contexte

@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useAuthContext } from "./AuthContext";
+import { STORAGE_KEY } from "../constants/AppConstant";
 
 // on définit l'objet du contexte de session
 interface SessionContextType {
@@ -22,7 +23,7 @@ const SessionContextProvider = ({ children }: SessionContextProviderProps): Reac
 
     //méthode pour recuperer les informations de l'utilisateur
     const getUserInfo = async () => {
-        const userString = localStorage.getItem('STORAGE_KEY');
+        const userString = localStorage.getItem(STORAGE_KEY);
         if (userString) {
             const user = JSON.parse(userString);
             setUserInfo(user);
