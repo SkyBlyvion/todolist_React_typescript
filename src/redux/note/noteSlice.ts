@@ -6,6 +6,7 @@ import { RootState } from "../store";
 
 // on définit la structure de l'objet Note
 interface Note {
+    id: number;
     title: string;
     description: string;
     createdAt: Date;
