@@ -7,6 +7,7 @@ import PageLoader from '../../components/Loader/PageLoader';
 import { BsTrash } from 'react-icons/bs';
 import { deleteNote } from '../../services/noteService';
 import { useAuthContext } from '../../contexts/AuthContext';
+import EmptyNote from '../../components/Misc/EmptyNote';
 
 
 const Home: React.FC = () => {
@@ -37,6 +38,7 @@ const Home: React.FC = () => {
   return (
 
     loading ? <PageLoader /> :
+    notes.length == 0 ? <EmptyNote /> :
       <div className='h-screen flex flex-col items-center justify-start bg-brown_dark pt-5'>
         <h1 className='text-3xl font-bold text-white py-3'>Toutes les notes</h1>
         <div className='flex flex-wrap justify-center md:justify-start'>
