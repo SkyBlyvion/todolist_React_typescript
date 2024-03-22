@@ -1,5 +1,5 @@
 import { PayloadAction, ThunkAction, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { API_URL } from "../../constants/ApiConstant";
 import { RootState } from "../store";
 
@@ -47,11 +47,11 @@ export const { setNotes, setLoading } = noteSlice.actions;
 export const fetchNotes = ():ThunkAction<void, RootState, unknown, NoteAction> => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const response = await axios.get(`${API_URL}/notes?page=1`);
+        const response = await axios.get<HydraResponse<Note>>(`${API_URL}/notes?page=1`);
         dispatch(setNotes(response.data));
         dispatch(setLoading(false));
     } catch (error) {
-        console.log(`Erreur lors de la recuperation des notes : ${error}`);
+        console.log(`Erreur lors de la recuperation des notes : ${error as AxiosError}`);
         dispatch(setLoading(false));
     }
 };
