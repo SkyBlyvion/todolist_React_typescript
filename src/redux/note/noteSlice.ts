@@ -45,14 +45,14 @@ const noteSlice = createSlice({
 
 export const { setNotes, setLoading } = noteSlice.actions;
 
-export const fetchNotes = ():ThunkAction<void, RootState, unknown, NoteAction> => async dispatch => {
+export const fetchNotes = (id:string | undefined):ThunkAction<void, RootState, unknown, NoteAction> => async dispatch => {
     try {
         dispatch(setLoading(true));
-        const response = await axios.get<HydraResponse<Note>>(`${API_URL}/notes?page=1`);
+        const response = await axios.get<HydraResponse<Note>>(`${API_URL}/notes?page=1&user.id=${id}`);
         dispatch(setNotes(response.data));
         dispatch(setLoading(false));
     } catch (error) {
-        console.log(`Erreur lors de la recuperation des notes : ${error as AxiosError}`);
+        console.log(`Erreur lors de la recuperation des notes : ${error}`);
         dispatch(setLoading(false));
     }
 };

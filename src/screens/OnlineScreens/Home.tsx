@@ -6,6 +6,7 @@ import { selectNoteData } from '../../redux/note/noteSelector';
 import PageLoader from '../../components/Loader/PageLoader';
 import { BsTrash } from 'react-icons/bs';
 import { deleteNote } from '../../services/noteService';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 
 const Home: React.FC = () => {
@@ -13,9 +14,13 @@ const Home: React.FC = () => {
   // on récupére le hook useDispatch pour executer le fetchNotes
   const dispatch: AppDispatch = useDispatch();
 
+  // on recupere l'user id pour fetchnotes deuis le contexte d(auth)
+  const {userId} = useAuthContext();
+
+
   // a chaque dispatch on remet a jour le fetchnotes
   useEffect(() => {
-    dispatch(fetchNotes())
+    dispatch(fetchNotes(userId))
   }, [dispatch])
 
   const { loading, notes } = useSelector(selectNoteData);
@@ -23,7 +28,7 @@ const Home: React.FC = () => {
   // update notes and autoF5, no need to f5
   const handleDelete = async (id:number) => {
     if(await deleteNote(id)){
-      dispatch(fetchNotes())
+      dispatch(fetchNotes(userId))
     }
   }
 
