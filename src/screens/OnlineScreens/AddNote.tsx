@@ -5,6 +5,8 @@ import CustomInput from '../../components/Input/CustomInput';
 import CustomArea from '../../components/Input/CustomArea';
 import ButtonLoader from '../../components/Loader/ButtonLoader';
 import SubmitButton from '../../components/Button/SubmitButton';
+import { API_URL } from '../../constants/ApiConstant';
+import axios from 'axios';
 
 //on veut faire un formulaire titre, description, submit
 const AddNote:React.FC = () => {
@@ -23,7 +25,7 @@ const AddNote:React.FC = () => {
   const navigate = useNavigate();
 
   //méthode pour enregistrer une nouvelle note
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(title, '||| ' + description)
 
@@ -34,10 +36,30 @@ const AddNote:React.FC = () => {
       createdAt: new Date(),
       user: `/api/users/${userId}`
     }
+    
+    // on definit les parametres des headers
+    const headers = {
+      'Content-Type': 'application/ld+json',
+    }
+  
+    try {
+      setIsLoading(true);
+      await axios.post(`${API_URL}/notes`, newNote, {headers}).then((response)=>{
+        if(response.status === 201){
+          setIsLoading(false);
+          navigate('/');
+        }
+      }).catch((error)=>{
+        console.log(`Erreur lors de l'enregistrement de la nouvelle note : ${error}`);
+        setIsLoading(false);
+      })
+    } catch (error) {
+      console.log(`Erreur lors de l'enregistrement de la nouvelle note : ${error}`);
+      setIsLoading(false);
+    }
+
   }
 
-  // on definit les parametres des headers
-  
 
   return (
     <div className='flex flex-col items-center justify-start pt-5 min-w-64'>
