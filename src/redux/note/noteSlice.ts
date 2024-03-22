@@ -1,5 +1,5 @@
 import { PayloadAction, ThunkAction, createSlice } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { API_URL } from "../../constants/ApiConstant";
 import { RootState } from "../store";
 
