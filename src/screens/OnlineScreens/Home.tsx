@@ -4,6 +4,8 @@ import { AppDispatch } from '../../redux/store';
 import { fetchNotes } from '../../redux/note/noteSlice';
 import { selectNoteData } from '../../redux/note/noteSelector';
 import PageLoader from '../../components/Loader/PageLoader';
+import { BsTrash } from 'react-icons/bs';
+import { deleteNote } from '../../services/noteService';
 
 
 const Home: React.FC = () => {
@@ -16,8 +18,15 @@ const Home: React.FC = () => {
     dispatch(fetchNotes())
   }, [dispatch])
 
-
   const { loading, notes } = useSelector(selectNoteData);
+
+  // update notes and autoF5, no need to f5
+  const handleDelete = async (id:number) => {
+    if(await deleteNote(id)){
+      dispatch(fetchNotes())
+    }
+  }
+
   console.log('aaaaaaa', notes)
 
   return (
@@ -35,6 +44,7 @@ const Home: React.FC = () => {
                   <p className='text-brown_dark text-sm '>
                     {new Date(note.createdAt).toLocaleDateString()}
                   </p>
+                  <BsTrash onClick={()=>{handleDelete(note.id)}} className='text-red_dark cursor-pointer h-5 w-5' />
                 </div>
               </div>
             </div>
