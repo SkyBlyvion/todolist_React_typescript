@@ -23,7 +23,6 @@ const Navbar:React.FC = () => {
                 <span className='text-2xl font-semibold text-white whitespace-nowrap'>TODOList</span>
             </Link>
             <div className='flex items-center space-x-3 rtl:space-x-reverse'>
-                {/* TODO: appel du composant LinkButton */}
                 <LinkButton to='/' label='Accueil' />
                 <LinkButton to='/add-note' label='Ajouter une note' />
                 <RiLogoutCircleRLine onClick={()=>{handleLogout()}} className='text-3xl text-yellow hover:text-yellow_hover cursor-pointer' />
