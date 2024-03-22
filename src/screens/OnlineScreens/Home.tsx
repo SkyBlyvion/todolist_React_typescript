@@ -8,6 +8,8 @@ import { BsTrash } from 'react-icons/bs';
 import { deleteNote } from '../../services/noteService';
 import { useAuthContext } from '../../contexts/AuthContext';
 import EmptyNote from '../../components/Misc/EmptyNote';
+import { CiEdit } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 
 
 const Home: React.FC = () => {
@@ -17,6 +19,8 @@ const Home: React.FC = () => {
 
   // on recupere l'user id pour fetchnotes deuis le contexte d(auth)
   const {userId} = useAuthContext();
+
+  const navigate = useNavigate();
 
 
   // a chaque dispatch on remet a jour le fetchnotes
@@ -33,7 +37,11 @@ const Home: React.FC = () => {
     }
   }
 
-  console.log('aaaaaaa', notes)
+  const handleEdit = (id:number) => {
+    navigate(`/edit/${id}`)
+  }
+
+  // console.log('aaaaaaa', notes)
 
   return (
 
@@ -52,6 +60,7 @@ const Home: React.FC = () => {
                     {new Date(note.createdAt).toLocaleDateString()}
                   </p>
                   <BsTrash onClick={()=>{handleDelete(note.id)}} className='text-red_dark cursor-pointer h-5 w-5' />
+                  <CiEdit onClick={()=>{handleEdit(note.id)}} className='text-red_dark cursor-pointer h-7 w-7' />
                 </div>
               </div>
             </div>
